@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kj1001.khome.base.dao.MenuDao">
+    <select id="selectMenuListByRoleId" resultType="Menu" parameterType="String">
+        select
+            sm.id,
+            sm.base_id,
+            sm.menu_name,
+            sm.meun_url
+        from
+            sys_auth sa
+            left join sys_menu sm on sm.id = sa.meun_id
+        <where>
+            <if test="id != null and id !=''">
+                sa.role_id=#{id}
+            </if>
+        </where>
+    </select>
+
+</mapper>

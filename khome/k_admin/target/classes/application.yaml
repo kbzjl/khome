@@ -1,0 +1,12 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: kapp
+  profiles:
+    active: dev
+
+  #热部署
+  devtools:
+    restart:
+      enabled: true

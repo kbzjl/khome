@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kj1001.khome.base.dao.SubjectListDao">
+    <sql id="subList">
+        qsl.id,
+        qsl.list_name listName,
+        qt.type_name typeName,
+        si.sto_name stoName,
+        qsl.type,
+        qsl.money,
+        qsl.create_time createTime
+    </sql>
+    <select id="selectSubList" resultType="Map" parameterType="Map">
+        select
+        <include refid="subList"/>
+        from
+            que_subject_list qsl
+        left join que_type qt on qt.id=qsl.type_id and qt.del_state=0
+        left join sto_info si on si.di=qsl.sto_id and si.del_state=0
+        where
+            qsl.del_state=0
+        <if test="stoName != null and stoName != ''">
+            and si.sto_name = #{stoName}
+        </if>
+        <if test="listName != null and listName != ''">
+            and qsl.list_name = #{listName}
+        </if>
+        <if test="typeId != null and typeId != ''">
+            and qsl.type_id = #{typeId}
+        </if>
+        <if test="type != null and typeId != ''">
+            and qsl.type = #{type}
+        </if>
+    </select>
+
+</mapper>

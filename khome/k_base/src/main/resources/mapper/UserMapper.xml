@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kj1001.khome.base.dao.UserDao">
+    <sql id="userInfo">
+        id,
+        create_time createTime,
+        update_time updateTime,
+        del_state delState,
+        user_name userName,
+        phone,
+        password
+    </sql>
+    <!--查询用户-->
+    <select id="selectListByEntity" parameterType="User" resultType="User">
+        select
+            <include refid="userInfo"/>
+        from
+            u_user
+        <where>
+            del_state = 0
+            <if test="phone !=null and phone!=''">
+                and phone = #{phone}
+            </if>
+            <if test="password !=null and password!=''">
+                and password = #{password}
+            </if>
+            <if test="userName !=null and userName!=''">
+                and user_name like concat ("%",#{userName},"%")
+            </if>
+        </where>
+    </select>
+
+<!--    &lt;!&ndash;查询用户id phone name&ndash;&gt;-->
+<!--    <select id="selectUserInfo" parameterType="User" resultType="User">-->
+<!--        select-->
+<!--        <include refid="userInfo"/>-->
+<!--        from-->
+<!--        u_user-->
+<!--        <where>-->
+<!--            del_state = 0-->
+<!--            <if test="id !=null and id!=''">-->
+<!--                and id = #{id}-->
+<!--            </if>-->
+<!--            <if test="phone !=null and phone!=''">-->
+<!--                and phone = #{phone}-->
+<!--            </if>-->
+<!--            <if test="password !=null and password!=''">-->
+<!--                and password = #{password}-->
+<!--            </if>-->
+<!--            <if test="userName !=null and userName!=''">-->
+<!--                and user_name like concat ("%",#{userName},"%")-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
+
+
+</mapper>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kj1001.khome.base.dao.OrderDao">
+    <update id="updateOrderTimeout" parameterType="list">
+        update
+            or_order
+        set
+            state = 3
+        where
+            id in
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+          <!--支付状态小于2的 0是未支付 1是支付中 3失效-->
+        and state &lt; 2
+    </update>
+    <select id="selectOrderList" parameterType="Map" resultType="Map">
+        select
+            od.id,
+            uu.user_name userName,
+            uu.phone,
+            od.money,
+            od.type,
+            qsl.list_name listName,
+            od.create_time createTime,
+            od.pay_time payTime,
+            od.state
+
+        from
+            or_order od
+        left join u_user uu on od.user_id = uu.id and uu.del_state=0
+        left join que_subject_list qsl on od.que_id = qsl.id and qsl.del_state=0
+        where
+            od.del_state = 0
+        <if test="userName !=null and userName!=''" >
+            and uu.usere_name = #{userName}
+        </if>
+        <if test="phone !=null and phone !=''">
+            and uu.phone =#{phone}
+        </if>
+        <if test="state !=null and state !=''">
+            and od.state =#{state}
+        </if>
+        <if test="payType !=null and payType!=''">
+            and od.payType=#{payType}
+        </if>
+
+        <if test="createTimeStart !=null">
+            and od.create_time &gt;= #{createTimeStart}
+        </if>
+        <if test="createTimeEnd !=null">
+            and od.create_time &lt;= #{createTimeEnd}
+        </if>
+
+
+
+
+
+
+    </select>
+
+</mapper>

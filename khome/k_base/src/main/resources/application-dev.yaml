@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/khome_dev?serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+
+  # redis的配置
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+    password: "00000000"
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  type-aliases-package: cn.kj1001.khome.base.entity
+# 密码加盐
+info:
+  pwd: 9Xy0Gx
+  #统一日志配置文件
+logging:
+  config: classpath:config/logback-spring.xml
+  level:
+    root: info
+# 自定义的日志路径-在日志文件中已经提前写好，直接使用
+log:
+  path: e:/log
